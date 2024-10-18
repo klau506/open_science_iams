@@ -1,0 +1,117 @@
+\documentclass[11pt]{article}
+\usepackage[a4paper, total={6in, 8in}]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{pdfpages}
+\usepackage{amssymb} % bigstar symbol
+
+\title{Open Science Practices in Integrated Assessment Models\\Protocol Checklist}
+\author{Clàudia Rodés-Bachs$^{1}$, 
+        Jon Sampedro$^{1}$, 
+        Natasha Frilingou$^{2}$,\\
+        Francesco Gardumi$^{3}$, and 
+        Camilla Lo Giudice$^{3}$
+}
+
+\date{%
+    \small $^1$Basque Center for Climate Change, Leioa, Spain\\
+    \small $^2$Energy Policy Unit, School of Electrical and Computer Engineering, National Technical University of Athens, Iroon Politechniou 9, 157 80 Athens, Greece\\
+    \small $^3$ KTH Royal Institute of Technology, Brinellvägen 68, 114 28 Stockholm, Sweden\\
+    \today
+}
+
+\newcommand{\beginsupplement}{%
+        \setcounter{table}{0}
+        \renewcommand{\thetable}{S\arabic{table}}%
+        \setcounter{figure}{0}
+        \renewcommand{\thefigure}{S\arabic{figure}}%
+     }
+
+% for checklist
+\newlist{todolist}{itemize}{2}
+\setlist[todolist,1]{label=$\bigstar$} % First level icon
+\setlist[todolist,2]{label=$\star$} % Second level icon
+
+\begin{document}  
+\maketitle
+\sloppy
+\makeatletter
+\renewcommand \thesection{S\@arabic\c@section}
+\renewcommand\thetable{S\@arabic\c@table}
+\renewcommand \thefigure{S\@arabic\c@figure}
+\makeatother
+\newpage
+
+\section{Open Science Protocol Checklist}
+\begin{enumerate}
+\item Model and Data Harmonization Process.
+    \begin{enumerate}[label=\alph*)]
+        \item Model Documentation.
+        \begin{todolist}
+            \item \CheckBox[name=mycheckboxA1]{} A dedicated platform for model documentation, including:
+            \begin{todolist}
+                \item \CheckBox[name=mycheckboxA11]{} Details of inputs.
+                \item \CheckBox[name=mycheckboxA12]{} Details of outputs.
+                \item \CheckBox[name=mycheckboxA13]{} Details of assumptions.
+                \item \CheckBox[name=mycheckboxA14]{} Details of equations.
+                \item \CheckBox[name=mycheckboxA15]{} Details of model versions.
+            \end{todolist}
+            \item \CheckBox[name=mycheckboxA2]{} Assignment of a DOI to model release versions.
+        \end{todolist}
+
+        \item Model Interconnections (if applicable).
+        \begin{todolist}
+            \item \CheckBox[name=mycheckboxB1]{} A dedicated section in the paper detailing:
+            \begin{todolist}
+                \item \CheckBox[name=mycheckboxB11]{} Interaction mechanisms between models.
+                \item \CheckBox[name=mycheckboxB12]{} Inputs and outputs of the interconnections.
+                \item \CheckBox[name=mycheckboxB13]{} Assumptions specific to the interconnections.
+                \item \CheckBox[name=mycheckboxB14]{} Model versions used.
+            \end{todolist}
+        \end{todolist}
+
+        \item Input Harmonization (if applicable).
+        \begin{todolist}
+            \item \CheckBox[name=mycheckboxC1]{} A dedicated section in the paper detailing:
+            \begin{todolist}
+                \item \CheckBox[name=mycheckboxC11]{} Specific modifications to the inputs and the rationale behind them.
+                \item \CheckBox[name=mycheckboxC12]{} Assumptions related to the harmonization process.
+                \item \CheckBox[name=mycheckboxC13]{} Model versions used.
+            \end{todolist}
+            \item \CheckBox[name=mycheckboxC2]{} Pointer or citation to the specific modified model version, if applicable.
+        \end{todolist}
+    \end{enumerate}
+
+\item Open Management of Project Outcomes.
+    \begin{enumerate}[label=\alph*)]
+        \item Output Standardization.
+        \begin{todolist}
+            \item \CheckBox[name=mycheckboxD1]{} Standardization of model outputs according to the time-series data template.
+        \end{todolist}
+        
+        \item Output Validation.
+        \begin{todolist}
+            \item \CheckBox[name=mycheckboxE1]{} Validation of the first model period against observed data.
+            \item \CheckBox[name=mycheckboxE2]{} Alignment checks of key outputs, such as demand and supply.
+        \end{todolist}
+        
+        \item Output Files Storage.
+        \begin{todolist}
+            \item \CheckBox[name=mycheckboxF1]{} Storage of raw output in an accessible location.
+            \item \CheckBox[name=mycheckboxF2]{} Storage of study-specific results in an accessible location.
+            \item \CheckBox[name=mycheckboxF3]{} Availability of analysis code and figures creation code.
+            \item \CheckBox[name=mycheckboxF4]{} Availability of metadata detailing data origin and handling process.
+            \item \CheckBox[name=mycheckboxF5]{} Assignment of a DOI to the model outputs and analysis code.
+        \end{todolist}
+        
+        \item Visualization Tools.
+        \begin{todolist}
+            \item \CheckBox[name=mycheckboxG1]{} Provision of comprehensive figures to illustrate the results.
+            \item \CheckBox[name=mycheckboxG2]{} Development of user-friendly visualization tools for easy exploration of outcomes.
+        \end{todolist}
+    \end{enumerate}
+\end{enumerate}
+
+
+\end{document}
