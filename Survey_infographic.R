@@ -1,5 +1,6 @@
 library(ggplot2)
 library(dplyr)
+library(ggrepel)
 
 colors.labels <- c("Yes:" = "#66c2a5",
                    "No:" = "#fc8d62",
