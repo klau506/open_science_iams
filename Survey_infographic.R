@@ -9,7 +9,7 @@ colors.labels <- c("Yes:" = "#66c2a5",
                    "No" = "#fc8d62",
                    "Does not\napply" = "#8da0cb",
                    "Models' repository\npage:" = "#c08552",
-                   "Documentation in the\nMeth/SI section of\nthe related paper:\n" = "#cc8b86",
+                   "In the\nMeth/SI section of\nthe related paper:\n" = "#cc8b86",
                    "Zenodo:" = "#916162",
                    "GitHub:" = "#d1be9c",
                    "GitHub:\n" = "#d1be9c",
@@ -20,10 +20,12 @@ colors.labels <- c("Yes:" = "#66c2a5",
                    "Lack of\ntime:\n" = "#d1be9c",
                    "Lack\nof time:\n" = "#d1be9c",
                    "Lack\nof \ntime:\n" = "#d1be9c",
+                   "Lack\ntime:\n" = "#d1be9c",
                    "Lack of knowladge:\n" = "#c08552",
                    "Lack of\nknowladge:\n" = "#c08552",
                    "Lack of\n knowladge:\n" = "#c08552",
                    "     Lack of\n     knowladge:\n     " = "#c08552",
+                   "Lack\nknowladge:\n" = "#c08552",
                    "Sectoral\nmodel:" = "#aa998f",
                    "Sectoral\nmodel:\n" = "#aa998f",
                    "Sectoral model:\n" = "#aa998f",
@@ -33,12 +35,15 @@ colors.labels <- c("Yes:" = "#66c2a5",
                    "Too heavy\n    data:" = "#aa998f",
                    "Output values\nare robust:\n" = "#916162",
                    "First model\nperiod\ncompared\nto observed\ndata:" = "#d1be9c",
+                   "First model\nperiod vs\nobserved\ndata:" = "#d1be9c",
                    "Lack of\nawareness\nof this option:\n" = "#916162",
                    "Lack of\nawareness\nof this\noption:" = "#916162",
                    "Lack of\nawareness\nof this\n   option:\n     " = "#916162",
                    "Lack of\nawareness\n   of this\n     option:\n         " = "#916162",
                    "Lack of\nawareness\n   of this\n    option:\n     " = "#916162",
                    "Lack of\n   awareness\n    of this\n         option:\n            " = "#916162",
+                   "Unaware of\noption" = "#916162",
+                   "Unaware\nof option:\n" = "#916162",
                    "Model specific\nplatform:" = "#c08552",
                    "Model\nspecific\nplatform:\n    " = "#c08552",
                    "Project specific\nplatform:" = "#d1be9c",
@@ -172,7 +177,7 @@ pl_harmonization_a <- do_barchart(data_harmonization_a)
 
 # b) How?
 data_harmonization_b <- data.frame(
-  response = c("Documentation in the\nMeth/SI section of\nthe related paper:\n", "Zenodo:\n"),
+  response = c("In the\nMeth/SI section of\nthe related paper:\n", "Zenodo:\n"),
   percentage = c(88.8, 11.2)
 )
 pl_harmonization_b <- do_piechart(data_harmonization_b, vjust_value = 0.43)
@@ -214,17 +219,17 @@ pl_vetting_a <- do_barchart(data_vetting_a)
 
 # b) How?
 data_vetting_b <- data.frame(
-  response = c("Output values\nare robust:\n", "First model\nperiod\ncompared\nto observed\ndata:"),
+  response = c("Output values\nare robust:\n", "First model\nperiod vs\nobserved\ndata:"),
   percentage = c(66.6,33.3)
 )
 pl_vetting_b <- do_piechart(data_vetting_b)
 
 # c) Why?
 data_vetting_c <- data.frame(
-  response = c("Lack\nof \ntime:\n", "Lack of\nknowladge:\n", "Lack of\nawareness\nof this\noption:",
+  response = c("Lack\ntime:\n", "Lack\nknowladge:\n", "Unaware\nof option:\n",
                "Sectoral\nmodel:\n", "Other:\n"),
   percentage = c(34,11,22,11,22),
-  cumulative_percentage = c(-5.75,-7,3,-10,-5)
+  cumulative_percentage = c(-5.75,-8,5.25,-5,0)
 )
 pl_vetting_c <- do_piechart2(data_vetting_c, font_size = 10, offset_mm = 0.5)
 
@@ -248,13 +253,12 @@ pl_rawStorage_b <- do_piechart(data_rawStorage_b)
 
 # c) Why?
 data_rawStorage_c <- data.frame(
-  response = c("Lack of\ntime:\n", "Lack of\n knowladge:\n", "Lack of\n   awareness\n    of this\n         option:\n            ",
+  response = c("Lack\ntime:\n", "Lack\nknowladge:\n", "Unaware\nof option:\n",
                "Too heavy\ndata:", "Other:\n"),
   percentage = c(23,38.5,7.5,23,8),
-  cumulative_percentage = c(-1,-7,-4,-13,-7)
+  cumulative_percentage = c(1,2,-3,-3,2)
 )
 pl_rawStorage_c <- do_piechart2(data_rawStorage_c, font_size = 10, offset_mm = 0.05, direction = "x")
-pl_rawStorage_c
 
 
 
@@ -276,12 +280,11 @@ pl_studyStorage_b <- do_piechart(data_studyStorage_b, vjust_value = 0.58)
 
 # c) Why?
 data_studyStorage_c <- data.frame(
-  response = c("Lack\nof time:\n", "Lack of\nknowladge:\n", "Lack of\nawareness\n   of this\n     option:\n         ", "Other:\n"),
+  response = c("Lack\ntime:\n", "Lack\nknowladge:\n", "Unaware\nof option:\n", "Other:\n"),
   percentage = c(25,37.5,12.5,25),
-  cumulative_percentage = c(0,-11,2,-5)
+  cumulative_percentage = c(-1,0,-6,0)
 )
 pl_studyStorage_c <- do_piechart2(data_studyStorage_c, font_size = 10,  offset_mm = 0.5)
-
 
 
 
@@ -301,15 +304,15 @@ data_visualization_b <- data.frame(
                "Rshiny\n  widget:\n",
                "Other:\n"),
   percentage = c(14,57,14,14),
-  cumulative_percentage = c(52,69,-10,45)
+  cumulative_percentage = c(52,65,-15,47)
 )
-pl_visualization_b <- do_piechart2(data_visualization_b, font_size = 10,  offset_mm = 0.5)
+pl_visualization_b <- do_piechart2(data_visualization_b, font_size = 10,  offset_mm = 0.4)
 
 # c) Why?
 data_visualization_c <- data.frame(
-  response = c("Lack of\ntime:\n", "Lack of\nknowladge:\n", "Lack of\nawareness\n   of this\n    option:\n     ", "Other:\n"),
+  response = c("Lack\ntime:\n", "Lack\nknowladge:\n", "Unaware\nof option:\n", "Other:\n"),
   percentage = c(30,40,10,20),
-  cumulative_percentage = c(-25,-34,-20,-30)
+  cumulative_percentage = c(-5,-7,-12,-9)
 )
 pl_visualization_c <- do_piechart2(data_visualization_c, font_size = 10,  offset_mm = 0.5)
 
@@ -333,7 +336,7 @@ data_tools_b <- data.frame(
                "Docker:\n",
                "Jupyter\nNote-\nbook:\n"),
   percentage = c(44,36,4,4,12),
-  cumulative_percentage = c(-35,-20,31,-27,14)
+  cumulative_percentage = c(-37,-25,35,-25,22)
 )
 pl_tools_b <- do_piechart2(data_tools_b, font_size = 10,  offset_mm = 1, direction = "both")
 
@@ -341,49 +344,9 @@ pl_tools_b <- do_piechart2(data_tools_b, font_size = 10,  offset_mm = 1, directi
 data_tools_c <- data.frame(
   response = c("Data storage:\n", "Version\nrelease:\n", "Report\n& doc.\nsharing:", "Version control:\n", "Other:\n"),
   percentage = c(36,13,18,18,13),
-  cumulative_percentage = c(28,32,4,25,47)
+  cumulative_percentage = c(22,24,27,25,25)
 )
-font_size = 10; offset_mm = 0.05; direction = "y"
-pl_tools_c <-
-  ggplot(data_tools_c, aes(x = "", y = percentage, fill = response)) +
-  geom_bar(stat = "identity", width = 1) +
-  coord_polar(theta = "y") +
-  geom_text_repel(data = data_tools_c %>%
-                    dplyr::filter(response != "Report\n& doc.\nsharing:") %>%
-                    dplyr::mutate(cumulative_percentage = (cumulative_percentage + cumsum(percentage) - (percentage / 2) + 38) %% 100),
-                  aes(label = dplyr::if_else(response == "", "",
-                                             dplyr::if_else(substr(response, nchar(response), nchar(response)) != "\n",
-                                                            paste0(response, " ", percentage, "%"),
-                                                            paste0(response, percentage, "%"))),
-                      y = cumulative_percentage),
-                  size = font_size,
-                  color = "black",
-                  nudge_x = offset_mm / 25.4,
-                  nudge_y = offset_mm / 25.4,
-                  segment.size = 0,
-                  direction = direction,
-                  box.padding = 0,
-                  point.padding = 0) +
-  geom_text_repel(data = data_tools_c %>%
-                    dplyr::filter(response == "Report\n& doc.\nsharing:") %>%
-                    dplyr::mutate(cumulative_percentage = (cumulative_percentage + cumsum(percentage) - (percentage / 2) + 38) %% 100),
-                  aes(label = dplyr::if_else(response == "", "",
-                                             dplyr::if_else(substr(response, nchar(response), nchar(response)) != "\n",
-                                                            paste0(response, " ", percentage, "%"),
-                                                            paste0(response, percentage, "%"))),
-                      y = cumulative_percentage),
-                  size = font_size,
-                  color = "black",
-                  nudge_x = offset_mm / 25.4,
-                  nudge_y = offset_mm / 25.4,
-                  segment.size = 0,
-                  direction = "both",
-                  box.padding = 0,
-                  point.padding = 0) +
-  scale_fill_manual(values = colors.labels) +
-  theme_void() +
-  theme(legend.position = "none")
-
+pl_tools_c <- do_piechart2(data_tools_c, font_size = 10,  offset_mm = 0.8, direction = "both")
 
 
 ##### - Final figure
