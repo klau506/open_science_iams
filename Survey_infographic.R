@@ -120,7 +120,7 @@ do_barchart <- function(dataset) {
     geom_bar(stat = "identity", width = 0.4) +  # Bar plot
     geom_text(aes(label = paste0(percentage, "%")),
               position = position_stack(vjust = 0.5),
-              color = "black", size = 10) +
+              color = "black", size = 11) +
     coord_flip() +
     scale_fill_manual(values = colors.labels) +
     theme_minimal() +
@@ -148,8 +148,8 @@ pl_documentation_a <- do_barchart(data_documentation_a)
 
 # b) How?
 data_documentation_b <- data.frame(
-  response = c("Models' repository\npage:"),
-  percentage = c(100)
+  response = c("Models' repository\npage:","Paper describing\nthe model:"),
+  percentage = c(92.3,7.7)
 )
 pl_documentation_b <- do_piechart(data_documentation_b)
 
@@ -166,14 +166,14 @@ pl_documentation_c <- do_piechart(data_documentation_c)
 # a) Bar
 data_harmonization_a <- data.frame(
   response = c("Yes:", "No:", "Does not apply:"),
-  percentage = c(78,11,11)
+  percentage = c(70,15,15)
 )
 pl_harmonization_a <- do_barchart(data_harmonization_a)
 
 # b) How?
 data_harmonization_b <- data.frame(
   response = c("Documentation in the\nMeth/SI section of\nthe related paper:\n", "Zenodo:\n"),
-  percentage = c(87.5, 12.5)
+  percentage = c(88.8, 11.2)
 )
 pl_harmonization_b <- do_piechart(data_harmonization_b, vjust_value = 0.43)
 
@@ -190,16 +190,16 @@ pl_harmonization_c <- do_piechart(data_harmonization_c)
 # a) Bar
 data_standardization_a <- data.frame(
   response = c("Yes:", "No:", "Does not apply:"),
-  percentage = c(56,33,11)
+  percentage = c(61.5,31,7.5)
 )
 pl_standardization_a <- do_barchart(data_standardization_a)
 
 # c) Why?
 data_standardization_c <- data.frame(
   response = c("Lack of\ntime:", "Lack of\nknowladge:\n", "Sectoral\nmodel:"),
-  percentage = c(25,25,50)
+  percentage = c(20,20,40)
 )
-pl_standardization_c <- do_piechart(data_standardization_c, font_size = 9)
+pl_standardization_c <- do_piechart(data_standardization_c, font_size = 10)
 
 
 
@@ -208,14 +208,14 @@ pl_standardization_c <- do_piechart(data_standardization_c, font_size = 9)
 # a) Bar
 data_vetting_a <- data.frame(
   response = c("Yes:", "No:"),
-  percentage = c(33,67)
+  percentage = c(38.5,61.5)
 )
 pl_vetting_a <- do_barchart(data_vetting_a)
 
 # b) How?
 data_vetting_b <- data.frame(
   response = c("Output values\nare robust:\n", "First model\nperiod\ncompared\nto observed\ndata:"),
-  percentage = c(50,50)
+  percentage = c(66.6,33.3)
 )
 pl_vetting_b <- do_piechart(data_vetting_b)
 
@@ -223,11 +223,10 @@ pl_vetting_b <- do_piechart(data_vetting_b)
 data_vetting_c <- data.frame(
   response = c("Lack\nof \ntime:\n", "Lack of\nknowladge:\n", "Lack of\nawareness\nof this\noption:",
                "Sectoral\nmodel:\n", "Other:\n"),
-  percentage = c(12.5,25,25,12.5,25),
-  cumulative_percentage = c(5,-7.5,9,-6,0)
+  percentage = c(34,11,22,11,22),
+  cumulative_percentage = c(-5.75,-7,3,-10,-5)
 )
-pl_vetting_c <- do_piechart2(data_vetting_c, font_size = 8, offset_mm = 0.5)
-
+pl_vetting_c <- do_piechart2(data_vetting_c, font_size = 10, offset_mm = 0.5)
 
 
 
@@ -236,7 +235,7 @@ pl_vetting_c <- do_piechart2(data_vetting_c, font_size = 8, offset_mm = 0.5)
 # a) Bar
 data_rawStorage_a <- data.frame(
   response = c("Yes:", "No:"),
-  percentage = c(33,67)
+  percentage = c(30,70)
 )
 pl_rawStorage_a <- do_barchart(data_rawStorage_a)
 
@@ -251,12 +250,11 @@ pl_rawStorage_b <- do_piechart(data_rawStorage_b)
 data_rawStorage_c <- data.frame(
   response = c("Lack of\ntime:\n", "Lack of\n knowladge:\n", "Lack of\n   awareness\n    of this\n         option:\n            ",
                "Too heavy\ndata:", "Other:\n"),
-  percentage = c(22,34,11,22,11),
-  cumulative_percentage = c(0,-14,0,-10,-5)
-  # cumulative_percentage = c(-4,-3,-10,-4,-7)
+  percentage = c(23,38.5,7.5,23,8),
+  cumulative_percentage = c(-1,-7,-4,-13,-7)
 )
-pl_rawStorage_c <- do_piechart2(data_rawStorage_c, font_size = 8, offset_mm = 0.05, direction = "x")
-
+pl_rawStorage_c <- do_piechart2(data_rawStorage_c, font_size = 10, offset_mm = 0.05, direction = "x")
+pl_rawStorage_c
 
 
 
@@ -265,24 +263,24 @@ pl_rawStorage_c <- do_piechart2(data_rawStorage_c, font_size = 8, offset_mm = 0.
 # a) Bar
 data_studyStorage_a <- data.frame(
   response = c("Yes:", "No:"),
-  percentage = c(56,44)
+  percentage = c(61.5,38.5)
 )
 pl_studyStorage_a <- do_barchart(data_studyStorage_a)
 
 # b) How?
 data_studyStorage_b <- data.frame(
   response = c("Zenodo:", "GitHub:\n"),
-  percentage = c(83,17)
+  percentage = c(80,20)
 )
 pl_studyStorage_b <- do_piechart(data_studyStorage_b, vjust_value = 0.58)
 
 # c) Why?
 data_studyStorage_c <- data.frame(
   response = c("Lack\nof time:\n", "Lack of\nknowladge:\n", "Lack of\nawareness\n   of this\n     option:\n         ", "Other:\n"),
-  percentage = c(17,33,17,33),
+  percentage = c(25,37.5,12.5,25),
   cumulative_percentage = c(0,-11,2,-5)
 )
-pl_studyStorage_c <- do_piechart2(data_studyStorage_c, font_size = 8,  offset_mm = 0.5)
+pl_studyStorage_c <- do_piechart2(data_studyStorage_c, font_size = 10,  offset_mm = 0.5)
 
 
 
@@ -292,7 +290,7 @@ pl_studyStorage_c <- do_piechart2(data_studyStorage_c, font_size = 8,  offset_mm
 # a) Bar
 data_visualization_a <- data.frame(
   response = c("Yes:", "No:"),
-  percentage = c(44,56)
+  percentage = c(38.5,61.5)
 )
 pl_visualization_a <- do_barchart(data_visualization_a)
 
@@ -302,18 +300,18 @@ data_visualization_b <- data.frame(
                "Project specific\nplatform:",
                "Rshiny\n  widget:\n",
                "Other:\n"),
-  percentage = c(16,52,16,16),
+  percentage = c(14,57,14,14),
   cumulative_percentage = c(52,69,-10,45)
 )
-pl_visualization_b <- do_piechart2(data_visualization_b, font_size = 8,  offset_mm = 0.5)
+pl_visualization_b <- do_piechart2(data_visualization_b, font_size = 10,  offset_mm = 0.5)
 
 # c) Why?
 data_visualization_c <- data.frame(
   response = c("Lack of\ntime:\n", "Lack of\nknowladge:\n", "Lack of\nawareness\n   of this\n    option:\n     ", "Other:\n"),
-  percentage = c(37.5,37.5,12.5,12.5),
+  percentage = c(30,40,10,20),
   cumulative_percentage = c(-25,-34,-20,-30)
 )
-pl_visualization_c <- do_piechart2(data_visualization_c, font_size = 8,  offset_mm = 0.5)
+pl_visualization_c <- do_piechart2(data_visualization_c, font_size = 10,  offset_mm = 0.5)
 
 
 
@@ -323,7 +321,7 @@ pl_visualization_c <- do_piechart2(data_visualization_c, font_size = 8,  offset_
 # a) Bar
 data_tools_a <- data.frame(
   response = c("Yes:", "No:"),
-  percentage = c(22,88)
+  percentage = c(23,77)
 )
 pl_tools_a <- do_barchart(data_tools_a)
 
@@ -334,18 +332,18 @@ data_tools_b <- data.frame(
                "GitLab:   \n",
                "Docker:\n",
                "Jupyter\nNote-\nbook:\n"),
-  percentage = c(39.5,39.5,6,6,11),
+  percentage = c(44,36,4,4,12),
   cumulative_percentage = c(-35,-20,31,-27,14)
 )
-pl_tools_b <- do_piechart2(data_tools_b, font_size = 8,  offset_mm = 1, direction = "both")
+pl_tools_b <- do_piechart2(data_tools_b, font_size = 10,  offset_mm = 1, direction = "both")
 
 # c) Why?
 data_tools_c <- data.frame(
   response = c("Data storage:\n", "Version\nrelease:\n", "Report\n& doc.\nsharing:", "Version control:\n", "Other:\n"),
-  percentage = c(33,16,16,26,10),
+  percentage = c(36,13,18,18,13),
   cumulative_percentage = c(28,32,4,25,47)
 )
-font_size = 8; offset_mm = 0.05; direction = "y"
+font_size = 10; offset_mm = 0.05; direction = "y"
 pl_tools_c <-
   ggplot(data_tools_c, aes(x = "", y = percentage, fill = response)) +
   geom_bar(stat = "identity", width = 1) +
