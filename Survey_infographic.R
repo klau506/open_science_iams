@@ -49,6 +49,7 @@ colors.labels <- c("Yes:" = "#66c2a5",
                    "Project specific\nplatform:" = "#d1be9c",
                    "Rshiny\n  widget:\n" = "#aa998f",
                    "Data storage:\n" = "#c08552",
+                   "Data\nstorage:\n" = "#c08552",
                    "Version\nrelease:\n" = "#aa998f",
                    "Report\n& doc.\nsharing:" = "#916162",
                    "Doc.\n&report\nsharing:" = "#916162",
@@ -63,7 +64,7 @@ colors.labels <- c("Yes:" = "#66c2a5",
 #' @param vjust_value vertical adjustment of the figure text.
 #' @param font_size size of the figure text.
 #' @returns ggplot piechart representing the percentage responses.
-do_piechart <- function(dataset, vjust_value = 0.5, font_size = 10) {
+do_piechart <- function(dataset, vjust_value = 0.5, font_size = 12) {
   pl <- ggplot(dataset, aes(x = "", y = percentage, fill = response)) +
     geom_bar(stat = "identity", width = 1) +
     coord_polar(theta = "y") +
@@ -83,33 +84,24 @@ do_piechart <- function(dataset, vjust_value = 0.5, font_size = 10) {
 #' @param dataset dataset with 2 columns: responses and percentages.
 #' @param font_size size of the figure text.
 #' @param offset_mm separation from the pie chart center.
-#' @param direction direction of the seperation from the pie chart center.
 #' @returns ggplot piechart representing the percentage responses.
-do_piechart2 <- function(dataset, font_size = 10, offset_mm = 2, direction = "x") {
-  # calculate cumulative midpoint of each sector for label positioning as a percentage from the North
-  dataset <- dataset %>%
-    dplyr::mutate(cumulative_percentage = (cumulative_percentage + cumsum(percentage) - (percentage / 2) + 38) %% 100)
+do_piechart2 <- function(dataset, font_size = 12, offset_mm = 2, rm_legend = T) {
 
   pl <- ggplot(dataset, aes(x = "", y = percentage, fill = response)) +
     geom_bar(stat = "identity", width = 1) +
     coord_polar(theta = "y") +
-    geom_text_repel(aes(label = dplyr::if_else(response == "", "",
-                                               dplyr::if_else(substr(response, nchar(response), nchar(response)) != "\n",
-                                               paste0(response, " ", percentage, "%"),
-                                               paste0(response, percentage, "%"))),
-                        y = cumulative_percentage),
-                    size = font_size,
-                    color = "black",
-                    # convert mm to inches for ggplot adjustment
-                    nudge_x = offset_mm / 25.4,
-                    nudge_y = offset_mm / 25.4,
-                    segment.size = 0,
-                    direction = direction,
-                    box.padding = 0,
-                    point.padding = 0) +
+    geom_text(aes(x = offset_mm, y = cumulative_percentage,
+                  label = dplyr::if_else(substr(response, nchar(response), nchar(response)) != "\n",
+                                                 paste0(response, " ", percentage, "%"),
+                                                 paste0(response, percentage, "%"))),
+              inherit.aes = FALSE, size = font_size) +
     scale_fill_manual(values = colors.labels) +
-    theme_void() +
-    theme(legend.position = "none")
+    theme_void()
+
+  if (rm_legend) {
+    pl <- pl +
+      theme(legend.position = "none")
+  }
 
   return(pl)
 }
@@ -204,7 +196,7 @@ data_standardization_c <- data.frame(
   response = c("Lack of\ntime:", "Lack of\nknowladge:\n", "Sectoral\nmodel:"),
   percentage = c(20,20,40)
 )
-pl_standardization_c <- do_piechart(data_standardization_c, font_size = 10)
+pl_standardization_c <- do_piechart(data_standardization_c, font_size = 12)
 
 
 
@@ -226,12 +218,11 @@ pl_vetting_b <- do_piechart(data_vetting_b)
 
 # c) Why?
 data_vetting_c <- data.frame(
-  response = c("Lack\ntime:\n", "Lack\nknowladge:\n", "Unaware\nof option:\n",
-               "Sectoral\nmodel:\n", "Other:\n"),
+  response = c("Lack\ntime:\n", "Lack\nknowladge:\n", "Unaware\nof option:\n", "Sectoral\nmodel:\n", "Other:\n"),
   percentage = c(34,11,22,11,22),
-  cumulative_percentage = c(-5.75,-8,5.25,-5,0)
+  cumulative_percentage = c(73,94,12,27.5,44)
 )
-pl_vetting_c <- do_piechart2(data_vetting_c, font_size = 10, offset_mm = 0.5)
+pl_vetting_c <- do_piechart2(data_vetting_c, font_size = 12, offset_mm = 1.15, rm_legend = T)
 
 
 
@@ -253,12 +244,11 @@ pl_rawStorage_b <- do_piechart(data_rawStorage_b)
 
 # c) Why?
 data_rawStorage_c <- data.frame(
-  response = c("Lack\ntime:\n", "Lack\nknowladge:\n", "Unaware\nof option:\n",
-               "Too heavy\ndata:", "Other:\n"),
+  response = c("Lack\ntime:\n", "Lack\nknowladge:\n", "Unaware\nof option:\n", "Too heavy\ndata:", "Other:\n"),
   percentage = c(23,38.5,7.5,23,8),
-  cumulative_percentage = c(1,2,-3,-3,2)
+  cumulative_percentage = c(50, 82, 4.5, 20.5, 35)
 )
-pl_rawStorage_c <- do_piechart2(data_rawStorage_c, font_size = 10, offset_mm = 0.05, direction = "x")
+pl_rawStorage_c <- do_piechart2(data_rawStorage_c, font_size = 12, offset_mm = 1.1, rm_legend = T)
 
 
 
@@ -282,9 +272,9 @@ pl_studyStorage_b <- do_piechart(data_studyStorage_b, vjust_value = 0.58)
 data_studyStorage_c <- data.frame(
   response = c("Lack\ntime:\n", "Lack\nknowladge:\n", "Unaware\nof option:\n", "Other:\n"),
   percentage = c(25,37.5,12.5,25),
-  cumulative_percentage = c(-1,0,-6,0)
+  cumulative_percentage = c(50,82,6,24)
 )
-pl_studyStorage_c <- do_piechart2(data_studyStorage_c, font_size = 10,  offset_mm = 0.5)
+pl_studyStorage_c <- do_piechart2(data_studyStorage_c, font_size = 12,  offset_mm = 1.15, rm_legend = T)
 
 
 
@@ -304,17 +294,17 @@ data_visualization_b <- data.frame(
                "Rshiny\n  widget:\n",
                "Other:\n"),
   percentage = c(14,57,14,14),
-  cumulative_percentage = c(52,65,-15,47)
+  cumulative_percentage = c(93,40,7,78)
 )
-pl_visualization_b <- do_piechart2(data_visualization_b, font_size = 10,  offset_mm = 0.4)
+pl_visualization_b <- do_piechart2(data_visualization_b, font_size = 12,  offset_mm = 1.1, rm_legend = T)
 
 # c) Why?
 data_visualization_c <- data.frame(
   response = c("Lack\ntime:\n", "Lack\nknowladge:\n", "Unaware\nof option:\n", "Other:\n"),
   percentage = c(30,40,10,20),
-  cumulative_percentage = c(-5,-7,-12,-9)
+  cumulative_percentage = c(45,81,5.5,20)
 )
-pl_visualization_c <- do_piechart2(data_visualization_c, font_size = 10,  offset_mm = 0.5)
+pl_visualization_c <- do_piechart2(data_visualization_c, font_size = 12,  offset_mm = 1.1, rm_legend = T)
 
 
 
@@ -336,17 +326,17 @@ data_tools_b <- data.frame(
                "Docker:\n",
                "Jupyter\nNote-\nbook:\n"),
   percentage = c(44,36,4,4,12),
-  cumulative_percentage = c(-37,-25,35,-25,22)
+  cumulative_percentage = c(23,78,58,98,50)
 )
-pl_tools_b <- do_piechart2(data_tools_b, font_size = 10,  offset_mm = 1, direction = "both")
+pl_tools_b <- do_piechart2(data_tools_b, font_size = 12,  offset_mm = 1.15, rm_legend = T)
 
 # c) Why?
 data_tools_c <- data.frame(
-  response = c("Data storage:\n", "Version\nrelease:\n", "Report\n& doc.\nsharing:", "Version control:\n", "Other:\n"),
+  response = c("Data\nstorage:\n", "Version\nrelease:\n", "Report\n& doc.\nsharing:", "Version control:\n", "Other:\n"),
   percentage = c(36,13,18,18,13),
-  cumulative_percentage = c(22,24,27,25,25)
+  cumulative_percentage = c(80,6.5,39,24,55)
 )
-pl_tools_c <- do_piechart2(data_tools_c, font_size = 10,  offset_mm = 0.8, direction = "both")
+pl_tools_c <- do_piechart2(data_tools_c, font_size = 12,  offset_mm = 1.1, rm_legend = T)
 
 
 ##### - Final figure
@@ -380,105 +370,105 @@ legend <- ggpubr::get_legend(ggplot(data_harmonization_a, aes(x = 1, y = percent
 pl <- cowplot::ggdraw() +
   ## 1. Model documentation
   cowplot::draw_plot_label(label = c("Is your model documented?"), size = 35, x = 0, y = 0.99) +
-  cowplot::draw_plot_label(label = c("How?"), size = 30, x = 0.1, y = 0.925) +
-  cowplot::draw_plot_label(label = c("Why not?"), size = 30, x = 0.22, y = 0.925) +
+  cowplot::draw_plot_label(label = c("How?"), size = 30, x = 0.07, y = 0.925) +
+  cowplot::draw_plot_label(label = c("Why not?"), size = 30, x = 0.25, y = 0.925) +
   cowplot::draw_plot(pl_documentation_a, x = 0, y = 0.9, width = 0.4, height = 0.1) +
-  cowplot::draw_plot(pl_documentation_b, x = 0, y = 0.725, width = 0.2, height = 0.2) +
-  cowplot::draw_plot(pl_documentation_c, x = 0.2, y = 0.725, width = 0.2, height = 0.2) +
-  cowplot::draw_line(x = c(0.175, 0.1), y = c(0.925, 0.885),
+  cowplot::draw_plot(pl_documentation_b, x = 0, y = 0.7, width = 0.25, height = 0.25) +
+  cowplot::draw_plot(pl_documentation_c, x = 0.2, y = 0.7, width = 0.25, height = 0.25) +
+  cowplot::draw_line(x = c(0.175, 0.1), y = c(0.925, 0.900),
                      arrow = grid::arrow(length = grid::unit(0.02, "npc"), type = "closed"),
                      color = "black", size = 2) +
-  cowplot::draw_line(x = c(0.225, 0.3), y = c(0.925, 0.885),
+  cowplot::draw_line(x = c(0.225, 0.3), y = c(0.925, 0.900),
                      arrow = grid::arrow(length = grid::unit(0.02, "npc"), type = "closed"),
                      color = "black", size = 2) +
   ## 2. Model harmonization & interconnections
   cowplot::draw_plot_label(label = c("Are your model harmonization &\n interconnections documented?"), size = 35, x = 0.475, y = 1.005) +
-  cowplot::draw_plot_label(label = c("How?"), size = 30, x = 0.6, y = 0.925) +
-  cowplot::draw_plot_label(label = c("Why not?"), size = 30, x = 0.72, y = 0.925) +
+  cowplot::draw_plot_label(label = c("How?"), size = 30, x = 0.57, y = 0.925) +
+  cowplot::draw_plot_label(label = c("Why not?"), size = 30, x = 0.75, y = 0.925) +
   cowplot::draw_plot(pl_harmonization_a, x = 0.5, y = 0.9, width = 0.4, height = 0.1) +
-  cowplot::draw_plot(pl_harmonization_b, x = 0.5, y = 0.725, width = 0.2, height = 0.2) +
-  cowplot::draw_plot(pl_harmonization_c, x = 0.7, y = 0.725, width = 0.2, height = 0.2) +
-  cowplot::draw_line(x = c(0.675, 0.6), y = c(0.925, 0.885),
+  cowplot::draw_plot(pl_harmonization_b, x = 0.5, y = 0.7, width = 0.25, height = 0.25) +
+  cowplot::draw_plot(pl_harmonization_c, x = 0.7, y = 0.7, width = 0.25, height = 0.25) +
+  cowplot::draw_line(x = c(0.675, 0.6), y = c(0.925, 0.900),
                      arrow = grid::arrow(length = grid::unit(0.02, "npc"), type = "closed"),
                      color = "black", size = 2) +
-  cowplot::draw_line(x = c(0.725, 0.8), y = c(0.925, 0.885),
+  cowplot::draw_line(x = c(0.725, 0.8), y = c(0.925, 0.900),
                      arrow = grid::arrow(length = grid::unit(0.02, "npc"), type = "closed"),
                      color = "black", size = 2) +
   ## 3. Output standardization
   cowplot::draw_plot_label(label = c("Do you standardize your model output?"), size = 35, x = -0.075, y = 0.75) +
-  cowplot::draw_plot_label(label = c("Why not?"), size = 30, x = 0.22, y = 0.684) +
+  cowplot::draw_plot_label(label = c("Why not?"), size = 30, x = 0.25, y = 0.684) +
   cowplot::draw_plot(pl_standardization_a, x = 0, y = 0.66, width = 0.4, height = 0.1) +
-  cowplot::draw_plot(pl_standardization_c, x = 0.2, y = 0.485, width = 0.2, height = 0.2) +
-  cowplot::draw_line(x = c(0.225, 0.3), y = c(0.684, 0.645),
+  cowplot::draw_plot(pl_standardization_c, x = 0.2, y = 0.460, width = 0.25, height = 0.25) +
+  cowplot::draw_line(x = c(0.225, 0.3), y = c(0.684, 0.660),
                      arrow = grid::arrow(length = grid::unit(0.02, "npc"), type = "closed"),
                      color = "black", size = 2) +
   ## 4. Output vetting
   cowplot::draw_plot_label(label = c("Do you vet your model output?"), size = 35, x = 0.49, y = 0.75) +
-  cowplot::draw_plot_label(label = c("How?"), size = 30, x = 0.6, y = 0.684) +
-  cowplot::draw_plot_label(label = c("Why not?"), size = 30, x = 0.72, y = 0.684) +
+  cowplot::draw_plot_label(label = c("How?"), size = 30, x = 0.57, y = 0.684) +
+  cowplot::draw_plot_label(label = c("Why not?"), size = 30, x = 0.75, y = 0.684) +
   cowplot::draw_plot(pl_vetting_a, x = 0.5, y = 0.66, width = 0.4, height = 0.1) +
-  cowplot::draw_plot(pl_vetting_b, x = 0.5, y = 0.485, width = 0.2, height = 0.2) +
-  cowplot::draw_plot(pl_vetting_c, x = 0.7, y = 0.485, width = 0.2, height = 0.2) +
-  cowplot::draw_line(x = c(0.675, 0.6), y = c(0.684, 0.645),
+  cowplot::draw_plot(pl_vetting_b, x = 0.5, y = 0.460, width = 0.25, height = 0.25) +
+  cowplot::draw_plot(pl_vetting_c, x = 0.7, y = 0.460, width = 0.25, height = 0.25) +
+  cowplot::draw_line(x = c(0.675, 0.6), y = c(0.684, 0.660),
                      arrow = grid::arrow(length = grid::unit(0.02, "npc"), type = "closed"),
                      color = "black", size = 2) +
-  cowplot::draw_line(x = c(0.725, 0.8), y = c(0.684, 0.645),
+  cowplot::draw_line(x = c(0.725, 0.8), y = c(0.684, 0.660),
                      arrow = grid::arrow(length = grid::unit(0.02, "npc"), type = "closed"),
                      color = "black", size = 2) +
   ## 5. Output storage (raw)
   cowplot::draw_plot_label(label = c("Do you store your raw outputs?"), size = 35, x = -0.0125, y = 0.5) +
-  cowplot::draw_plot_label(label = c("How?"), size = 30, x = 0.1, y = 0.434) +
-  cowplot::draw_plot_label(label = c("Why not?"), size = 30, x = 0.22, y = 0.434) +
+  cowplot::draw_plot_label(label = c("How?"), size = 30, x = 0.07, y = 0.434) +
+  cowplot::draw_plot_label(label = c("Why not?"), size = 30, x = 0.25, y = 0.434) +
   cowplot::draw_plot(pl_rawStorage_a, x = 0, y = 0.41, width = 0.4, height = 0.1) +
-  cowplot::draw_plot(pl_rawStorage_b, x = 0, y = 0.235, width = 0.2, height = 0.2) +
-  cowplot::draw_plot(pl_rawStorage_c, x = 0.2, y = 0.235, width = 0.2, height = 0.2) +
-  cowplot::draw_line(x = c(0.175, 0.1), y = c(0.434, 0.395),
+  cowplot::draw_plot(pl_rawStorage_b, x = 0, y = 0.210, width = 0.25, height = 0.25) +
+  cowplot::draw_plot(pl_rawStorage_c, x = 0.2, y = 0.210, width = 0.25, height = 0.25) +
+  cowplot::draw_line(x = c(0.175, 0.1), y = c(0.434, 0.410),
                      arrow = grid::arrow(length = grid::unit(0.02, "npc"), type = "closed"),
                      color = "black", size = 2) +
-  cowplot::draw_line(x = c(0.225, 0.3), y = c(0.434, 0.395),
+  cowplot::draw_line(x = c(0.225, 0.3), y = c(0.434, 0.410),
                      arrow = grid::arrow(length = grid::unit(0.02, "npc"), type = "closed"),
                      color = "black", size = 2) +
   ## 6. Output storage (study)
   cowplot::draw_plot_label(label = c("Do you store your study relevant outputs?"), size = 35, x = 0.415, y = 0.5) +
-  cowplot::draw_plot_label(label = c("How?"), size = 30, x = 0.6, y = 0.434) +
-  cowplot::draw_plot_label(label = c("Why not?"), size = 30, x = 0.72, y = 0.434) +
+  cowplot::draw_plot_label(label = c("How?"), size = 30, x = 0.57, y = 0.434) +
+  cowplot::draw_plot_label(label = c("Why not?"), size = 30, x = 0.75, y = 0.434) +
   cowplot::draw_plot(pl_studyStorage_a, x = 0.5, y = 0.41, width = 0.4, height = 0.1) +
-  cowplot::draw_plot(pl_studyStorage_b, x = 0.5, y = 0.235, width = 0.2, height = 0.2) +
-  cowplot::draw_plot(pl_studyStorage_c, x = 0.7, y = 0.235, width = 0.2, height = 0.2) +
-  cowplot::draw_line(x = c(0.675, 0.6), y = c(0.434, 0.395),
+  cowplot::draw_plot(pl_studyStorage_b, x = 0.5, y = 0.210, width = 0.25, height = 0.25) +
+  cowplot::draw_plot(pl_studyStorage_c, x = 0.7, y = 0.210, width = 0.25, height = 0.25) +
+  cowplot::draw_line(x = c(0.675, 0.6), y = c(0.434, 0.410),
                      arrow = grid::arrow(length = grid::unit(0.02, "npc"), type = "closed"),
                      color = "black", size = 2) +
-  cowplot::draw_line(x = c(0.725, 0.8), y = c(0.434, 0.395),
+  cowplot::draw_line(x = c(0.725, 0.8), y = c(0.434, 0.410),
                      arrow = grid::arrow(length = grid::unit(0.02, "npc"), type = "closed"),
                      color = "black", size = 2) +
   ## 7. Output visualization
   cowplot::draw_plot_label(label = c("Do you present your model outputs through\ninteractive user-friendly visualization tools?"), size = 35, x = -0.11, y = 0.26) +
-  cowplot::draw_plot_label(label = c("How?"), size = 30, x = 0.1, y = 0.174) +
-  cowplot::draw_plot_label(label = c("Why not?"), size = 30, x = 0.22, y = 0.174) +
+  cowplot::draw_plot_label(label = c("How?"), size = 30, x = 0.07, y = 0.174) +
+  cowplot::draw_plot_label(label = c("Why not?"), size = 30, x = 0.25, y = 0.174) +
   cowplot::draw_plot(pl_visualization_a, x = 0, y = 0.15, width = 0.4, height = 0.1) +
-  cowplot::draw_plot(pl_visualization_b, x = 0, y = -0.025, width = 0.2, height = 0.2) +
-  cowplot::draw_plot(pl_visualization_c, x = 0.2, y = -0.025, width = 0.2, height = 0.2) +
-  cowplot::draw_line(x = c(0.175, 0.1), y = c(0.174, 0.135),
+  cowplot::draw_plot(pl_visualization_b, x = 0, y = -0.05, width = 0.25, height = 0.25) +
+  cowplot::draw_plot(pl_visualization_c, x = 0.2, y = -0.05, width = 0.25, height = 0.25) +
+  cowplot::draw_line(x = c(0.175, 0.1), y = c(0.174, 0.150),
                      arrow = grid::arrow(length = grid::unit(0.02, "npc"), type = "closed"),
                      color = "black", size = 2) +
-  cowplot::draw_line(x = c(0.225, 0.3), y = c(0.174, 0.135),
+  cowplot::draw_line(x = c(0.225, 0.3), y = c(0.174, 0.150),
                      arrow = grid::arrow(length = grid::unit(0.02, "npc"), type = "closed"),
                      color = "black", size = 2) +
   ## 8. Tools
   cowplot::draw_plot_label(label = c("Did you create any open-source tool(s) to facilitate\n    the implementation of open science practices?"), size = 35, x = 0.35, y = 0.26) +
-  cowplot::draw_plot_label(label = c("Which open-source tools do you use\nto follow open science practices?"), size = 27.5, x = 0.34, y = 0.18) +
-  cowplot::draw_plot_label(label = c("Why do you use open-source tools?"), size = 27.5, x = 0.65, y = 0.174) +
+  cowplot::draw_plot_label(label = c("Which open-source tools do you use\nto follow open science practices?"), size = 27.5, x = 0.31, y = 0.18) +
+  cowplot::draw_plot_label(label = c("Why do you use open-source tools?"), size = 27.5, x = 0.68, y = 0.174) +
   cowplot::draw_plot(pl_tools_a, x = 0.5, y = 0.15, width = 0.4, height = 0.1) +
-  cowplot::draw_plot(pl_tools_b, x = 0.5, y = -0.025, width = 0.2, height = 0.2) +
-  cowplot::draw_plot(pl_tools_c, x = 0.7, y = -0.025, width = 0.2, height = 0.2) +
-  cowplot::draw_line(x = c(0.675, 0.6), y = c(0.174, 0.135),
+  cowplot::draw_plot(pl_tools_b, x = 0.5, y = -0.05, width = 0.25, height = 0.25) +
+  cowplot::draw_plot(pl_tools_c, x = 0.7, y = -0.05, width = 0.25, height = 0.25) +
+  cowplot::draw_line(x = c(0.675, 0.6), y = c(0.174, 0.150),
                      arrow = grid::arrow(length = grid::unit(0.02, "npc"), type = "closed"),
                      color = "black", size = 2) +
-  cowplot::draw_line(x = c(0.725, 0.8), y = c(0.174, 0.135),
+  cowplot::draw_line(x = c(0.725, 0.8), y = c(0.174, 0.150),
                      arrow = grid::arrow(length = grid::unit(0.02, "npc"), type = "closed"),
                      color = "black", size = 2) +
   ## legend
-  cowplot::draw_plot(cowplot::plot_grid(legend,blank_p,ncol=1), x = 0.45, y = -0.225, width = 1, height = 1) +
+  cowplot::draw_plot(cowplot::plot_grid(legend,blank_p,ncol=1), x = 0.45, y = -0.250, width = 1, height = 1) +
   ## labels
   cowplot::draw_plot_label(label = c("a)", "b)", "c)", "d)",
                                      "e)", "f)", "g)", "h)"),
