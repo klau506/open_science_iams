@@ -1,0 +1,26 @@
+----------------------------------------------------------------------
+----------------------------------------------------------------------
+Metadata
+
+"The attached table summarizes the survey results from thirteen modeling teams gathered in the IAM COMPACT [1] and DIAMOND [2] projects context. To protect respondent anonymity, certain answers have been withheld for confidentiality. Despite these omissions, the data offers valuable insights into the general trends, methodologies, and platforms used across different teams. The survey aims to enhance understanding of current open science practices within the integrated assessment modeling community, with a particular emphasis on documentation standards, data management strategies, and transparent modeling practices.
+
+The survey was answered during July and Agust 2024 by the IAM COMPACT partners and during May 2025 by the DIAMOND partners."
+
+----------------------------------------------------------------------
+----------------------------------------------------------------------
+Ethics and Consent
+
+All respondents who participated in the survey provided informed consent for the use of the information they shared in this study. They were made aware that their responses would be used for research purposes and included in this paper. The data were collected with the understanding that it would remain anonymized and used solely to inform the development of open science practices and protocols for integrated assessment models. Respondents had the right to withdraw their participation at any time.
+
+----------------------------------------------------------------------
+----------------------------------------------------------------------
+References
+
+"[1] IAM COMPACT. IAM COMPACT: Expanding Integrated Assessment Modelling: Comprehensive And Comprehensible Science for Sustainable, Co-Created Climate Action. 2024. Available at: https://www.iam-compact.eu/. Accessed September 18, 2024."
+"[2] DIAMOND. DIAMOND: Delivering the next generation of open Integrated Assessment Models for Net-zero, sustainable Development. 2024. Available at: https://www.climate-diamond.eu/. Accessed May 19, 2025."
+
+----------------------------------------------------------------------
+----------------------------------------------------------------------
+For any questions, please contact claudia.rodes@bc3research.org
+
+
