@@ -1,6 +1,6 @@
 # Open Science Practices in Integrated Assessment Models
 
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.13970492.svg)](https://doi.org/10.5281/zenodo.13970492)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.15602065.svg)](https://doi.org/10.5281/zenodo.15602065)
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 Supplementary material for the journal publication Rodés-Bachs, C., Sampedro, J., Frilingou, N., Gardumi, F., & Lo Giudice, C. (2024) Open Science Practices in Integrated Assessment Models.
